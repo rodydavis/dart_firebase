@@ -8,11 +8,9 @@ import '../../api.dart';
 import 'common/http.dart';
 
 class FirestoreClientImpl extends FirestoreHttpClient {
-  FirestoreClientImpl(String email, String password, App app, FirestoreAccessToken token,
-      FirestoreApiEndpoints endpoints)
+  FirestoreClientImpl(String email, String password, App app,
+      FirestoreAccessToken token, FirestoreApiEndpoints endpoints)
       : super(email, password, app, token, endpoints);
-
-      
 
   @override
   Future<dynamic> sendHttpRequest(Uri uri,

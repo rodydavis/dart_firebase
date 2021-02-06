@@ -12,7 +12,7 @@ class DocumentReference implements FirestoreReference {
   @override
   final List<String> pathComponents;
 
-    @override
+  @override
   bool operator ==(dynamic o) =>
       o is DocumentReference && o.client == client && o.path == path;
 
@@ -26,8 +26,7 @@ class DocumentReference implements FirestoreReference {
   /// document.
   CollectionReference collection(String collectionPath) {
     assert(collectionPath != null);
-    return CollectionReference(
-        client, <String>[path, collectionPath]);
+    return CollectionReference(client, <String>[path, collectionPath]);
   }
 
   /// Reads the document referenced by this [DocumentReference].
