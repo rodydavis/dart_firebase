@@ -4,33 +4,33 @@ class DocumentSnapshot implements FirestoreObject {
   DocumentSnapshot(this.client, this.json);
 
   /// Reads individual values from the snapshot
-  dynamic operator [](String key) => json[key];
+  dynamic operator [](String key) => json![key];
 
   @override
   final FirestoreClient client;
 
   @override
-  final Map<String, dynamic> json;
+  final Map<String, dynamic>? json;
 
   /// Gets a [DocumentReference] for the specified Firestore path.
   DocumentReference get reference {
     assert(path != null);
-    return DocumentReference(client, path.split('/'));
+    return DocumentReference(client, path!.split('/'));
   }
 
   /// Returns the ID of the snapshot's document
-  String get documentID => path.split('/').last;
+  String get documentID => path!.split('/').last;
 
   /// Returns `true` if the document exists.
   bool get exists => json != null;
 
-  String get path => json['name'];
+  String? get path => json!['name'];
 
-  DateTime get dateCreate => json['createTime'];
+  DateTime? get dateCreate => json!['createTime'];
 
-  DateTime get dateUpdated => json['updateTime'];
+  DateTime? get dateUpdated => json!['updateTime'];
 
-  Map<String, dynamic> get data => _getData(json['fields']);
+  Map<String, dynamic> get data => _getData(json!['fields']);
 }
 
 Map<String, dynamic> _getData(json) {
@@ -44,16 +44,16 @@ Map<String, dynamic> _getData(json) {
 
 dynamic _getValue(value) {
   final Map map = json.decode(json.encode(value));
-  for (String key in map.keys) {
+  for (String key in map.keys as Iterable<String>) {
     final _map = json.decode(json.encode(map[key]));
     if (key == 'stringValue') {
-      return _map as String;
+      return _map as String?;
     } else if (key == 'nullValue') {
       return null;
     } else if (key == 'timestampValue') {
       return DateTime.tryParse(_map);
     } else if (key == 'booleanValue') {
-      return _map as bool;
+      return _map as bool?;
     } else if (key == 'number_value') {
       return num.tryParse(_map.toString());
     } else if (key == 'geoPointValue') {

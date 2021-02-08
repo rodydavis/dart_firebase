@@ -19,7 +19,7 @@ HttpClient _createHttpClient() {
 class FirestoreClientImpl extends FirestoreHttpClient {
   FirestoreClientImpl(String email, String password, App app,
       FirestoreAccessToken token, FirestoreApiEndpoints endpoints,
-      {HttpClient client})
+      {HttpClient? client})
       : this.client = client == null ? _createHttpClient() : client,
         super(email, password, app, token, endpoints);
 
@@ -28,10 +28,10 @@ class FirestoreClientImpl extends FirestoreHttpClient {
   @override
   Future<dynamic> sendHttpRequest(Uri uri,
       {bool needsToken: true,
-      String extract,
-      Map<String, dynamic> body}) async {
+      String? extract,
+      Map<String, dynamic>? body}) async {
     if (endpoints.enableProxyMode) {
-      uri = uri.replace(queryParameters: {"__tesla": "api"});
+      uri = uri.replace(queryParameters: {"__firebase": "api"});
     }
 
     var request =
@@ -66,6 +66,6 @@ class FirestoreClientImpl extends FirestoreHttpClient {
 
   @override
   Future close() async {
-    await client.close();
+    client.close();
   }
 }

@@ -17,12 +17,12 @@ class CollectionReference implements FirestoreReference {
       o is DocumentReference && o.client == client && o.path == path;
 
   /// ID of the referenced collection.
-  String get id => _pathComponents.isEmpty ? null : _pathComponents.last;
+  String? get id => _pathComponents.isEmpty ? null : _pathComponents.last;
 
   /// For subcollections, parent returns the containing DocumentReference.
   ///
   /// For root collections, null is returned.
-  CollectionReference parent() {
+  CollectionReference? parent() {
     if (_pathComponents.isEmpty) {
       return null;
     }
@@ -44,7 +44,7 @@ class CollectionReference implements FirestoreReference {
   ///
   /// The unique key generated is prefixed with a client-generated timestamp
   /// so that the resulting list will be chronologically-sorted.
-  DocumentReference document([String path]) {
+  DocumentReference document([String? path]) {
     List<String> childPath;
     if (path == null) {
       final String key = PushIdGenerator.generatePushChildName();

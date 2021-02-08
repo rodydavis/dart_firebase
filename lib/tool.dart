@@ -7,18 +7,18 @@ import 'api.dart';
 export 'api.dart';
 
 const List<String> _emailEnvVars = const <String>[
-  "TESLA_EMAIL",
-  "TESLA_USERNAME",
-  "TESLA_USER"
+  "FIREBASE_EMAIL",
+  "FIREBASE_USERNAME",
+  "FIREBASE_USER"
 ];
 
 const List<String> _passwordEnvVars = const <String>[
-  "TESLA_PASSWORD",
-  "TESLA_PASS",
-  "TESLA_PWD"
+  "FIREBASE_PASSWORD",
+  "FIREBASE_PASS",
+  "FIREBASE_PWD"
 ];
 
-String _getEnvKey(List<String> possible) {
+String? _getEnvKey(List<String> possible) {
   for (var key in possible) {
     var dartEnvValue = new String.fromEnvironment(key);
     if (dartEnvValue != null) {
@@ -26,7 +26,7 @@ String _getEnvKey(List<String> possible) {
     }
 
     if (Platform.environment.containsKey(key) &&
-        Platform.environment[key].isNotEmpty) {
+        Platform.environment[key]!.isNotEmpty) {
       return Platform.environment[key];
     }
   }
@@ -36,12 +36,12 @@ String _getEnvKey(List<String> possible) {
 }
 
 FirestoreClient getFirestoreClient(
-    {String teslaUsername,
-    String teslaPassword,
-    App app,
-    FirestoreApiEndpoints endpoints}) {
-  var email = teslaUsername ?? _getEnvKey(_emailEnvVars).trim();
-  var password = teslaPassword ?? _getEnvKey(_passwordEnvVars);
+    {String? firebaseUsername,
+    String? firebasePassword,
+    App? app,
+    FirestoreApiEndpoints? endpoints}) {
+  var email = firebaseUsername ?? _getEnvKey(_emailEnvVars)!.trim();
+  var password = firebasePassword ?? _getEnvKey(_passwordEnvVars)!;
 
   if (password.startsWith("base64:")) {
     password =

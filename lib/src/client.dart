@@ -1,8 +1,8 @@
 part of dart_firebase;
 
 abstract class FirestoreClient {
-  factory FirestoreClient(String email, String password, App app,
-      {FirestoreApiEndpoints endpoints, FirestoreAccessToken token}) {
+  factory FirestoreClient(String email, String password, App? app,
+      {FirestoreApiEndpoints? endpoints, FirestoreAccessToken? token}) {
     return new FirestoreClientImpl(email, password, app, token,
         endpoints == null ? new FirestoreApiEndpoints.standard() : endpoints);
   }
@@ -41,14 +41,14 @@ class App {
   ///
   /// See: <https://firebase.google.com/docs/reference/js/firebase#.initializeApp>.
   const App({
-    this.apiKey,
+    required this.apiKey,
     this.authDomain,
     this.databaseURL,
-    this.projectId,
+    required this.projectId,
     this.storageBucket,
     this.messagingSenderId,
     this.appId,
-    String database,
+    String? database,
   })  : _name = database,
         assert(apiKey != null),
         assert(projectId != null);
@@ -65,14 +65,14 @@ class App {
     );
   }
   final String apiKey;
-  final String authDomain;
-  final String databaseURL;
+  final String? authDomain;
+  final String? databaseURL;
   final String projectId;
-  final String storageBucket;
-  final String messagingSenderId;
-  final String appId;
+  final String? storageBucket;
+  final String? messagingSenderId;
+  final String? appId;
 
   /// Database Override [DEFAULT]
   String get name => _name ?? _defaultAppName;
-  final String _name;
+  final String? _name;
 }
