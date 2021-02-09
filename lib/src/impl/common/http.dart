@@ -69,7 +69,7 @@ abstract class FirestoreHttpClient implements FirestoreClient {
   Future<List<DocumentSnapshot>> listDocumentSnapshots(String path) async {
     var list = <DocumentSnapshot>[];
 
-    var result = await getJsonList("$path", extract: 'documents');
+    var result = await (getJsonList("$path", extract: 'documents') as FutureOr<List<dynamic>>);
 
     for (var item in result) {
       list.add(new DocumentSnapshot(this, item));
@@ -96,24 +96,24 @@ abstract class FirestoreHttpClient implements FirestoreClient {
     return DocumentSnapshot(this, _asStringKeyedMap(_data));
   }
 
-  Future<Map<String, dynamic>> getJsonMap(String url,
-      {Map<String, dynamic> body,
-      String extract: "response",
+  Future<Map<String, dynamic>?> getJsonMap(String url,
+      {Map<String, dynamic>? body,
+      String? extract: "response",
       bool standard: true}) async {
     return (await sendHttpRequest(_apiUrl(url, standard),
-        body: body, extract: extract)) as Map<String, dynamic>;
+        body: body, extract: extract)) as Map<String, dynamic>?;
   }
 
-  Future<List<dynamic>> getJsonList(String url,
-      {Map<String, dynamic> body,
+  Future<List<dynamic>?> getJsonList(String url,
+      {Map<String, dynamic>? body,
       String extract: "response",
       bool standard: true}) async {
     return (await sendHttpRequest(_apiUrl(url, standard),
-        body: body, extract: extract)) as List<dynamic>;
+        body: body, extract: extract)) as List<dynamic>?;
   }
 
   Future<dynamic> sendHttpRequest(Uri uri,
-      {bool needsToken: true, String extract, Map<String, dynamic> body});
+      {bool needsToken: true, String? extract, Map<String, dynamic>? body});
 
   Uri _apiUrl(String path, bool standard) {
     path = standard ? "$path" : path;
@@ -122,7 +122,7 @@ abstract class FirestoreHttpClient implements FirestoreClient {
   }
 }
 
-Map<String, dynamic> _asStringKeyedMap(Map<dynamic, dynamic> map) {
+Map<String, dynamic>? _asStringKeyedMap(Map<dynamic, dynamic>? map) {
   if (map == null) return null;
   if (map is Map<String, dynamic>) {
     return map;

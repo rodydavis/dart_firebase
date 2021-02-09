@@ -19,16 +19,16 @@ class PushIdGenerator {
 
   static final Random _random = Random();
 
-  static int _lastPushTime;
+  static int? _lastPushTime;
 
-  static final List<int> _lastRandChars = List<int>(12);
+  static final List<int?> _lastRandChars = List<int?>.filled(12, null, growable: false);
 
   static String generatePushChildName() {
     int now = DateTime.now().millisecondsSinceEpoch;
     final bool duplicateTime = (now == _lastPushTime);
     _lastPushTime = now;
 
-    final List<String> timeStampChars = List<String>(8);
+    final List<String?> timeStampChars = List<String?>.filled(8, null, growable: false);
     for (int i = 7; i >= 0; i--) {
       timeStampChars[i] = PUSH_CHARS[now % 64];
       now = (now / 64).floor();
@@ -45,7 +45,7 @@ class PushIdGenerator {
       _incrementArray();
     }
     for (int i = 0; i < 12; i++) {
-      result.write(PUSH_CHARS[_lastRandChars[i]]);
+      result.write(PUSH_CHARS[_lastRandChars[i]!]);
     }
     assert(result.length == 20);
     return result.toString();
@@ -54,7 +54,7 @@ class PushIdGenerator {
   static void _incrementArray() {
     for (int i = 11; i >= 0; i--) {
       if (_lastRandChars[i] != 63) {
-        _lastRandChars[i] = _lastRandChars[i] + 1;
+        _lastRandChars[i] = _lastRandChars[i]! + 1;
         return;
       }
       _lastRandChars[i] = 0;

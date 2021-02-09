@@ -8,17 +8,15 @@ import '../../api.dart';
 import 'common/http.dart';
 
 class FirestoreClientImpl extends FirestoreHttpClient {
-  FirestoreClientImpl(String email, String password, App app, FirestoreAccessToken token,
-      FirestoreApiEndpoints endpoints)
+  FirestoreClientImpl(String email, String password, App app,
+      FirestoreAccessToken token, FirestoreApiEndpoints endpoints)
       : super(email, password, app, token, endpoints);
-
-      
 
   @override
   Future<dynamic> sendHttpRequest(Uri uri,
       {bool needsToken: true,
-      String extract,
-      Map<String, dynamic> body}) async {
+      String? extract,
+      Map<String, dynamic>? body}) async {
     var request = new HttpRequest();
     request.open(body == null ? "GET" : "POST", uri.toString());
     if (needsToken) {
@@ -38,7 +36,7 @@ class FirestoreClientImpl extends FirestoreHttpClient {
 
     await request.onLoadEnd.first;
 
-    var content = request.responseText;
+    var content = request.responseText!;
     if (request.status != 200) {
       throw new Exception(
           "Failed to perform action. (Status Code: ${request.status})\n${content}");
