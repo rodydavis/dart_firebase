@@ -1,6 +1,6 @@
 name: dart_firebase
 description: "Access Firebase Firestore from a REST API"
-version: 1.0.0-nullsafety.0
+version: 1.0.0-nullsafety.1
 homepage: https://github.com/rodydavis/plugins
 issue_tracker: https://github.com/rodydavis/dart_firebase
 authors:
